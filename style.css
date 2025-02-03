@@ -5,6 +5,10 @@ zz
 border-radius: 40%;
   }
 
+  nav {
+    padding: 0, 0.5rem;
+  }
+
 .nav-link {
   position: relative;
   display: inline-block;

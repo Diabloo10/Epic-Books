@@ -4,8 +4,21 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
   header("location: login.html");
   exit();
 }
-?>
 
+// Load theme from database or session
+include "connection.php";
+$userId = $_SESSION['userid'];
+$stmt = $conn->prepare("SELECT `darkmode` FROM `epicbooks_users` WHERE `id` = ?");
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$stmt->bind_result($darkMode);
+$stmt->fetch();
+$stmt->close();
+
+// Store theme in session
+$_SESSION['darkMode'] = $darkMode;
+
+?>
 <!doctype html>
 <html lang="en">
 
@@ -13,15 +26,13 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
   <title>Title</title>
   <!-- Required meta tags -->
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" /> 
 
   <!-- Bootstrap CSS v5.2.1 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
   <link rel="icon" href="EpicBooks.png" type="image/png">
-  
-  <!-- light mode  -->
-  <link rel="stylesheet" href="style.css" id="light-mode-css">
+
   <!-- dark mode -->
   <link rel="stylesheet" href="dark-mode.css" id="dark-mode-css" disabled>
 </head>
@@ -32,7 +43,12 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
   <header>
     <!-- place navbar here -->
     <?php include("navbar.php") ?>
-
+    
+    <script>
+    // Ensure the theme is loaded correctly
+    const userTheme = "<?php echo ($_SESSION['darkMode'] == 'Y' ? 'dark' : 'light'); ?>";
+    localStorage.setItem("theme", userTheme);
+    </script>
   </header>
 
   <main>
