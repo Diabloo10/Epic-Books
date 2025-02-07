@@ -87,6 +87,9 @@ if (!file_exists($file_path)) {
             color: #ffff;
             cursor: pointer;
         }
+        .green-icon {
+    color: green;
+  }
     </style>
 
 <link rel="icon" href="EpicBooks.png" type="image/png">
@@ -99,8 +102,8 @@ if (!file_exists($file_path)) {
 <body>
 <script src="theme-toggle.js"></script>
 
-<a href="javascript:history.back()" class="back-btn">
-<i class="bi bi-chevron-double-left"></i>    </a>
+<a href="javascript:history.back()" class="back-btn ml-auto">
+<i class="bi bi-chevron-double-left green-icon"></i>   </a>
 
     <div class="container mt-5">
         <h2 class="text-center">Viewing: <?php echo htmlspecialchars($book['title']); ?></h2>

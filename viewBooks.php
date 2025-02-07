@@ -1,18 +1,50 @@
 <?php
 include "connection.php";
 
-
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-$sql = "SELECT * FROM books WHERE id = $id";
-$result = $conn->query($sql);
+// Fetch the selected book and its genre
+$sql = "SELECT * FROM books WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-  $book = $result->fetch_assoc();
+    $book = $result->fetch_assoc();
+    $genres = explode(',', $book['genre']); // Convert "Fantasy, Adventure" into ["Fantasy", "Adventure"]
+    $related_books = [];
+
+    // Build a dynamic SQL query to match any of the genres
+    $sql_related = "SELECT * FROM books WHERE (";
+    $conditions = [];
+    $params = [];
+    $types = "";
+
+    foreach ($genres as $g) {
+        $conditions[] = "genre LIKE ?";
+        $params[] = "%" . trim($g) . "%"; // Trim spaces & allow partial matching
+        $types .= "s"; // Bind string
+    }
+
+    $sql_related .= implode(" OR ", $conditions) . ") AND id <> ?";
+    $params[] = $id;
+    $types .= "i"; // Bind integer for book ID
+
+    // Execute the query
+    $stmt = $conn->prepare($sql_related);
+    $stmt->bind_param($types, ...$params);
+    $stmt->execute();
+    $related_result = $stmt->get_result();
+
+    while ($row = $related_result->fetch_assoc()) {
+        $related_books[] = $row;
+    }
 } else {
-  echo "Book not found.";
-  exit;
+    echo "Book not found.";
+    exit;
 }
+
 ?>
 
 <!doctype html>
@@ -27,11 +59,58 @@ if ($result->num_rows > 0) {
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
   <link rel="stylesheet" href="style.css">
   <style>
-    .btn-primary {
-      background-color: #4CAF50;
-      border-color: #4CAF50;
-    }
-  </style>
+     /* Ensure the card is a flex container */
+.card {
+    display: flex;
+    flex-direction: column;  /* Makes the card content stack vertically */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: 0.3s ease-in-out;
+    height: 100%;  /* Ensure the card occupies full height in the container */
+    min-height: 380px; /* Set a minimum height to make cards consistent */
+    padding: 40px;
+}
+
+.card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top {
+    height: 220px;  /* Fixed height for images */
+    object-fit: cover;  /* Maintains aspect ratio without stretching */
+}
+
+/* Card body should stretch to fill available space */
+.card-body {
+    flex-grow: 1;  /* Takes up remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;  /* Ensures title, text, and button stay spaced properly */
+    padding: 10px;
+}
+
+/* Title and text styling */
+.card-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 10px; /* Adds spacing between the title and text */
+}
+
+.card-text {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 10px; /* Adds spacing between the text and the button */
+}
+
+/* View Book Button */
+.btn-outline-primary {
+    width: 100%;  /* Ensures the button spans the width of the card */
+    margin-top: auto; /* Pushes the button to the bottom */
+}
+
+
+    </style>
   <!-- light mode  -->
   <link rel="stylesheet" href="style.css" id="light-mode-css">
   <!-- dark mode -->
@@ -88,18 +167,17 @@ if ($result->num_rows > 0) {
     </nav>
   </header>
     <main>
-      <div class="container">
-        <div class="row book-section  border-dark border-bottom  py-3">
-          <div class="col-md-4 mb-4">
+    <div class="container">
+    <div class="row book-section border-dark border-bottom py-3">
+        <div class="col-md-4 mb-4">
             <?php if (!empty($book['cover_image'])): ?>
-              <img src="<?php echo 'uploads/' . htmlspecialchars($book['cover_image']); ?>"
-                class="img-fluid gallery-grid-item" alt="Book Cover">
+                <img src="<?php echo 'uploads/' . htmlspecialchars($book['cover_image']); ?>" class="img-fluid gallery-grid-item" alt="Book Cover">
             <?php else: ?>
-              <p>No cover image available.</p>
+                <p>No cover image available.</p>
             <?php endif; ?>
             <p class="additional-title my-2 text-center"><?php echo htmlspecialchars($book['title']); ?></p>
-          </div>
-          <div class="col-md-8 book-details">
+        </div>
+        <div class="col-md-8 book-details">
             <h3><?php echo htmlspecialchars($book['title']); ?></h3>
             <p><strong>Author:</strong> <?php echo htmlspecialchars($book['author']); ?></p>
             <p><strong>ISBN:</strong> <?php echo htmlspecialchars($book['isbn']); ?></p>
@@ -111,11 +189,46 @@ if ($result->num_rows > 0) {
             <p><strong>Edition:</strong> <?php echo htmlspecialchars($book['edition']); ?></p>
             <p><strong>Price:</strong> $<?php echo htmlspecialchars($book['price']); ?></p>
             <p><strong>Description:</strong> <?php echo nl2br(htmlspecialchars($book['description'])); ?></p>
-            <!-- view the PDF -->
+            <!-- View the PDF -->
             <a href="view_pdf.php?id=<?php echo $book['id']; ?>" class="btn btn-primary mt-3">Start Reading</a>
-          </div>
         </div>
-      </div>
+    </div>
+
+    <!-- Recommended Books Section -->
+    <h2 class="  text-center my-3">Recommended Books</h2>
+    <div class="row gx-4 gy-4 border-dark border-bottom py-3">
+    <?php if (!empty($related_books)): ?>
+        <?php foreach ($related_books as $related): ?>
+            <div class="col-lg-3 col-md-4 col-sm-6 p-3">
+                <div class="card">
+                    <!-- Book Cover Image -->
+                    <a href="viewBooks.php?id=<?php echo $related['id']; ?>">
+                        <img src="uploads/<?php echo htmlspecialchars($related['cover_image']); ?>" 
+                             class="card-img-top" 
+                             alt="<?php echo htmlspecialchars($related['title']); ?>">
+                    </a>
+
+                    <div class="card-body">
+                        <!-- Book Title -->
+                        <h5 class="card-title"><?php echo htmlspecialchars($related['title']); ?></h5>
+                        
+                        <!-- Book Author -->
+                        <p class="card-text"><strong>Author:</strong> <?php echo htmlspecialchars($related['author']); ?></p>
+                        
+                        <!-- View Book Button -->
+                        <a href="viewBooks.php?id=<?php echo $related['id']; ?>" class="btn btn-outline-primary btn-sm">View Book</a>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p class="text-muted">No recommendations available for this genre.</p>
+    <?php endif; ?>
+</div>
+
+
+
+</div>
   </main>
   <footer class=" footertext-center text-lg-start text-white p-0">
     <div class="container-fluid py-2 pb-0">

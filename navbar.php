@@ -1,7 +1,9 @@
-<nav class='navbar navbar-expand-lg mb-3 border-bottom px-5'>
+<nav class='navbar navbar-expand-lg mb-3 border-bottom px-3'>
   <div class='container-fluid'>
     <!-- Logo -->
-    <a class='navbar-brand'><img id='brandimg' src='EpicBooks.png' alt='Logo' height='80' width='80'></a>
+    <a class='navbar-brand' href="index.php">
+  <img id='brandimg' src='EpicBooks.png' alt='Logo' height='80' width='80'>
+</a>
 
     <!-- Toggle button -->
     <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas"

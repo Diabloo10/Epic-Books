@@ -35,7 +35,7 @@
         <div class="row d-flex align-items-center">
           <div class="col-md-7 col-lg-8 text-center text-md-start">
             <div class="license p-3  ">
-              © 2024 Copyright: all right reserved by
+              © 2025 Copyright: all right reserved by
               <a href="../admin.html" class="no-underline" style="text-decoration: none;">EpicBooks</a>
             </div>
           </div>
