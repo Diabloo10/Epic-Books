@@ -1,4 +1,4 @@
-<nav class='navbar navbar-expand-lg mb-3 border-bottom px-3'>
+<nav class='navbar navbar-expand-lg mb-3 border-bottom '>
   <div class='container-fluid'>
     <!-- Logo -->
     <a class='navbar-brand' href="index.php">

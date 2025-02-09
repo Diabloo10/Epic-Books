@@ -32,7 +32,9 @@ $_SESSION['darkMode'] = $darkMode;
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
   <link rel="icon" href="EpicBooks.png" type="image/png">
-
+  
+  <!-- light mode  -->
+  <!-- <link rel="stylesheet" href="style.css" id="light-mode-css"> -->
   <!-- dark mode -->
   <link rel="stylesheet" href="dark-mode.css" id="dark-mode-css" disabled>
 </head>
@@ -54,7 +56,7 @@ $_SESSION['darkMode'] = $darkMode;
   <main>
 
     <div class="container p-5">
-      <h2 class="justify-content-center align-items-center text-center font-weight-bold py-3">----- Welcome -----</h2>
+      <h2 class="justify-content-center align-items-center text-center font-weight-bold py-3">Welcome </h2>
       <h1 class=" welcome-content text-center py-3">EpicBooks </h1>
       <p class=" font-weight-bold" style="font-family:Verdana, Geneva, Tahoma, sans-serif;">Welcome to EpicBooks A
         Digital Library, a sanctuary for book lovers and knowledge seekers alike.

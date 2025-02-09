@@ -122,11 +122,12 @@ if ($result->num_rows > 0) {
 
   <header>
     <!-- place navbar here -->
-    <nav class="navbar navbar-expand-lg bg-body-dark mb-3 border-bottom ">
+    <nav class="navbar navbar-expand-lg bg-body-dark mb-3 border-bottom  ">
       <div class="container-fluid">
         <!-- logo -->
-        <a class="navbar-brand "><img id="brandimg" src="EpicBooks.png" alt="Logo" height="80" width="80"></a>
-
+        <a class='navbar-brand' href="index.php">
+  <img id='brandimg' src='EpicBooks.png' alt='Logo' height='80' width='80'>
+</a>
         <!-- toggle btn -->
         <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas"
           data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -216,7 +217,7 @@ if ($result->num_rows > 0) {
                         <p class="card-text"><strong>Author:</strong> <?php echo htmlspecialchars($related['author']); ?></p>
                         
                         <!-- View Book Button -->
-                        <a href="viewBooks.php?id=<?php echo $related['id']; ?>" class="btn btn-outline-primary btn-sm">View Book</a>
+                        <a href="viewBooks.php?id=<?php echo $related['id']; ?>" class="btn btn-outline-primary btn-sm text-dark">View Book</a>
                     </div>
                 </div>
             </div>
