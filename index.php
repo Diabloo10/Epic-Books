@@ -33,10 +33,7 @@ $_SESSION['darkMode'] = $darkMode;
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
   <link rel="icon" href="EpicBooks.png" type="image/png">
   
-  <!-- light mode  -->
-  <!-- <link rel="stylesheet" href="style.css" id="light-mode-css"> -->
-  <!-- dark mode -->
-  <link rel="stylesheet" href="dark-mode.css" id="dark-mode-css" disabled>
+
 </head>
 
 <body>
@@ -48,7 +45,7 @@ $_SESSION['darkMode'] = $darkMode;
     
     <script>
     // Ensure the theme is loaded correctly
-    const userTheme = "<?php echo ($_SESSION['darkMode'] == 'Y' ? 'dark' : 'light'); ?>";
+    const userTheme = "<?php echo $_SESSION['darkMode'] == 'Y' ? 'dark' : 'light'; ?>";
     localStorage.setItem("theme", userTheme);
     </script>
   </header>
