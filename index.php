@@ -33,10 +33,14 @@ $_SESSION['darkMode'] = $darkMode;
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
   <link rel="icon" href="EpicBooks.png" type="image/png">
   
+<<<<<<< HEAD
   <!-- light mode  -->
 <!-- <link rel="stylesheet" href="style.css" id="light-mode-css">  -->
   <!-- dark mode -->
-  <!-- <link rel="stylesheet" href="dark-mode.css" id="dark-mode-css" disabled> -->
+  <!-- <link rel="stylesheet" href="dark-mode.css" id="dark-mode-css" disabled> --> 
+=======
+
+>>>>>>> 0644ed0b0e2eb6b933a133883b1096370da39daf
 </head>
 
 <body>
