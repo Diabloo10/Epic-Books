@@ -1,4 +1,10 @@
 <?php
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("location: login.html");
+    exit();
+}
+
 include "connection.php";
 
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
@@ -191,12 +197,14 @@ if ($result->num_rows > 0) {
             <p><strong>Price:</strong> $<?php echo htmlspecialchars($book['price']); ?></p>
             <p><strong>Description:</strong> <?php echo nl2br(htmlspecialchars($book['description'])); ?></p>
             <!-- View the PDF -->
-            <a href="view_pdf.php?id=<?php echo $book['id']; ?>" class="btn btn-primary mt-3">Start Reading</a>
+            <a href="view_pdf.php?id=<?php echo $book['id']; ?>" class="btn btn-primary mt-3">Start Reading <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0z"/>
+</svg></a>
         </div>
     </div>
 
     <!-- Recommended Books Section -->
-    <h2 class="  text-center my-3">Recommended Books</h2>
+    <h2 class="  text-center my-3"> Books You May Liked</h2>
     <div class="row gx-4 gy-4 border-dark border-bottom py-3">
     <?php if (!empty($related_books)): ?>
         <?php foreach ($related_books as $related): ?>

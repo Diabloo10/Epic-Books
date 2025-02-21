@@ -50,7 +50,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
       <p>Welcome to EpicBooks, your go-to digital library where literature meets accessibility. Our mission is to revolutionize the way you interact with books and written content, providing an immersive experience that caters to diverse needs. We believe that everyone should have access to knowledge and storytelling, regardless of their circumstances.</p>
   </div>
   <div class="col-md-6 text-right">
-      <img src="Its A Good Day To Read Teacher School Librarian Book Lover T-Shirt.jpeg" alt="About Us Image" class="img-fluid my-3" style="max-width: 50%;">
+      <img src="Images\Quote.jpeg" alt="About Us Image" class="img-fluid my-3" style="max-width: 50%;">
   </div>
 </div>
 
@@ -61,7 +61,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
       <p>At EpicBooks, we envision a world where all individuals can explore and enjoy literature effortlessly. We strive to bridge the gap between traditional reading and modern technology, making every book an engaging and accessible journey. Our platform offers a wide array of features designed to enhance your reading experience, from customizable text displays to intuitive navigation.</p>
   </div>
   <div class="col-md-6 order-md-1 text-left">
-      <img src="mysticalwitch.jpeg" alt="Our Mission Image" class="img-fluid my-3" style="max-width: 50%;">
+      <img src="Images\mysticalwitch.jpeg" alt="Our Mission Image" class="img-fluid my-3" style="max-width: 50%;">
   </div>
 </div>
 
@@ -74,7 +74,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
       </p>
   </div>
   <div class="col-md-6 text-right">
-      <img src="Skeleton Phone Wallpaper.jpeg" alt="Who We Are Image" class="img-fluid my-3" style="max-width: 50%;">
+      <img src="Images\Skeleton.jpeg" alt="Who We Are Image" class="img-fluid my-3" style="max-width: 50%;">
   </div>
 </div>
 
@@ -85,7 +85,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
       <p>EpicBooks boasts an extensive library of digital content, allowing you to explore genres from fiction to non-fiction.</p>
   </div>
   <div class="col-md-6 order-md-1 text-left">
-      <img src="one more.jpeg" alt="What We Offer Image" class="img-fluid my-3" style="max-width: 50%;">
+      <img src="Images\one more.jpeg" alt="What We Offer Image" class="img-fluid my-3" style="max-width: 50%;">
   </div>
 </div>
 
@@ -96,11 +96,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
       <p>Dive into the world of EpicBooks and discover a new dimension of reading. For inquiries or more information, please visit our Contact Us page. Together, let’s make digital literature accessible and enjoyable for all!</p>
   </div>
   <div class="col-md-6 text-right">
-      <img src="join_us-transformed.jpeg" alt="Join Us Image" class="img-fluid my-3" style="max-width: 50%;">
+      <img src="Images\join_us-transformed.jpeg" alt="Join Us Image" class="img-fluid my-3" style="max-width: 50%;">
   </div>
 </div>
-        
-        </main>
+    </main>
        
        <!-- place footer here -->
        <footer>

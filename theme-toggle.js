@@ -44,8 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Function to save theme preference to localStorage and send to the server
   function saveThemePreference(theme) {
-    // Save to localStorage
-    localStorage.setItem("theme", theme);
 
     // Use AJAX to send to the server (store in DB)
     const xhr = new XMLHttpRequest();
@@ -65,13 +63,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Light mode event
   lightModeBtn.addEventListener("click", function () {
+    localStorage.setItem("theme", "light");
     applyTheme("light");
-    saveThemePreference("N"); // Save to database as 'light'
+    saveThemePreference("N");
   });
 
   // Dark mode event
   darkModeBtn.addEventListener("click", function () {
+    localStorage.setItem("theme", "dark");
     applyTheme("dark");
-    saveThemePreference("Y"); // Save to database as 'dark'
+    saveThemePreference("Y"); 
   });
 });

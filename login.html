@@ -132,42 +132,32 @@
     <video src="Library B-Roll Sequence.mp4" autoplay loop muted></video>
 
     <!-- Login Form -->
-    <div class="col-lg-4 col-md-6 col-sm-8 col-10 border border-1 border-dark rounded-3 shadow my-5 py-5 mx-3 form-overlay">
-      <h1 class="text-center  mb-3">Login</h1>
-      <form   action="login.php" method="post">
-        <div class="mb-3 px-3">
-          <label for="uname" class="form-label text-dark">UserName</label>
-          <input
-            type="text"
-            class="form-control"
-            name="uname"
-            id="uname"
-            placeholder="Enter your name"
-          />
-        </div>
-        <div id="unameError" class="error"></div>
 
-        <div class="mb-3 px-3">
-          <label for="pass" class="form-label text-dark">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            name="pass"
-            id="pass"
-            placeholder="Enter your password"
-          />
-        </div>
-        <div id="passError" class="error"></div>
+  <div class="col-lg-4 col-md-6 col-sm-8 col-10 border border-1 border-dark rounded-3 shadow my-5 py-5 mx-3 form-overlay">
+      <h1 class="text-center mb-3">Login</h1>
+      <p id="errorMessage" class="text-danger text-center"></p> <!-- Error message container -->
 
-        <div class="d-grid p-3">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
+      <form id="loginForm" onsubmit="loginUser(event)">
+          <div class="mb-3 px-3">
+              <label for="uname" class="form-label text-dark">UserName</label>
+              <input type="text" class="form-control" name="uname" id="uname" placeholder="Enter your name" />
+              <div id="unameError" class="text-danger"></div>
+          </div>
 
-        <!-- <a href="books.php" class="btn btn-custom btn-lg d-grid p-3 mx-2" id="exploreMoreBtn">Explore More</a> -->
-        <a class=" d-grid text-center btn-custom mx-3 p-2" href="./booksAdmin/Dashboard.php">Admin</a></h4>
+          <div class="mb-3 px-3">
+              <label for="pass" class="form-label text-dark">Password</label>
+              <input type="password" class="form-control" name="pass" id="pass" placeholder="Enter your password" />
+              <div id="passError" class="text-danger"></div>
+          </div>
 
+          <div class="d-grid p-3">
+              <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+
+          <a class="d-grid text-center btn-custom mx-3 p-2" href="./booksAdmin/Dashboard.php">Admin</a>
+          <a class="d-grid text-center mt-4" href="registration.html">New user? Sign up</a>
       </form>
-    </div>
+  </div>
   </div>
 
 
@@ -256,3 +246,49 @@
         ></script>
     </body>
 </html>
+<script>
+  function loginUser(event) {
+      event.preventDefault(); // Prevent form submission
+      
+      let uname = document.getElementById("uname").value.trim();
+      let pass = document.getElementById("pass").value.trim();
+      let unameError = document.getElementById("unameError");
+      let passError = document.getElementById("passError");
+      let errorMessage = document.getElementById("errorMessage");
+
+      // Clear previous errors
+      unameError.innerText = "";
+      passError.innerText = "";
+      errorMessage.innerText = "";
+
+      if (uname === "") {
+          unameError.innerText = "Username is required.";
+          return;
+      }
+      if (pass === "") {
+          passError.innerText = "Password is required.";
+          return;
+      }
+
+      let formData = new FormData();
+      formData.append("uname", uname);
+      formData.append("pass", pass);
+
+      fetch("login.php", {
+          method: "POST",
+          body: formData
+      })
+      .then(response => response.json()) // Parse JSON response
+      .then(data => {
+          if (data.success) {
+              window.location.href = "index.php"; // Redirect if login is successful
+          } else {
+              errorMessage.innerText = data.message; // Show error message
+          }
+      })
+      .catch(error => {
+          console.error("Error:", error);
+          errorMessage.innerText = "Something went wrong. Please try again.";
+      });
+  }
+</script>

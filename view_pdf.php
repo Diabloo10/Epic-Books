@@ -1,4 +1,10 @@
 <?php
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("location: login.html");
+    exit();
+}
+
 include "connection.php";
 
 // Check if 'id' parameter is present in the URL
